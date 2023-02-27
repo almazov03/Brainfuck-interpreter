@@ -1,4 +1,4 @@
-# Задание №2. Brainfuck
+# Brainfuck
 
 [Brainfuck](https://en.wikipedia.org/wiki/Brainfuck) -- turing-complete programming language,
 invented by Urban Mueller. The language contains only eight commands `><+-.,[]`. The program in the language
