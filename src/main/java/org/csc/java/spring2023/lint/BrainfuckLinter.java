@@ -1,19 +1,17 @@
 package org.csc.java.spring2023.lint;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
-import org.csc.java.spring2023.BracketSequenceLintProblem;
-import org.csc.java.spring2023.LintProblem;
 import org.csc.java.spring2023.Token;
-import org.csc.java.spring2023.UnknownCharacterLintProblem;
 
 public final class BrainfuckLinter implements Linter {
 
   @Override
   public List<LintProblem> lint(Token[] tokens, String programText) {
     int length = tokens.length;
-    ArrayList<LintProblem> problems = new ArrayList<>();
+    List<LintProblem> problems = new ArrayList<>();
 
     for (int i = 0; i < length; ++i) {
       if (tokens[i] == Token.UNRECOGNIZED_TOKEN) {
@@ -21,15 +19,15 @@ public final class BrainfuckLinter implements Linter {
       }
     }
 
-    Stack<Integer> stack = new Stack<>();
+    Deque<Integer> stack = new ArrayDeque<>();
     for (int i = 0; i < length; ++i) {
       if (tokens[i] == Token.LEFT_BRACKET) {
-        stack.push(i);
+        stack.addLast(i);
       }
 
       if (tokens[i] == Token.RIGHT_BRACKET) {
         if (stack.size() > 0) {
-          stack.pop();
+          stack.pollLast();
         } else {
           problems.add(new BracketSequenceLintProblem(i, programText));
         }

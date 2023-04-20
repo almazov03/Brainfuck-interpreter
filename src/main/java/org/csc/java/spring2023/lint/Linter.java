@@ -1,7 +1,6 @@
 package org.csc.java.spring2023.lint;
 
 import java.util.List;
-import org.csc.java.spring2023.LintProblem;
 import org.csc.java.spring2023.Token;
 
 public interface Linter {

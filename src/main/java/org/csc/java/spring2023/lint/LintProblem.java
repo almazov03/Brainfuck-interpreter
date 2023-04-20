@@ -1,4 +1,4 @@
-package org.csc.java.spring2023;
+package org.csc.java.spring2023.lint;
 
 /**
  * Дескриптор проблемы

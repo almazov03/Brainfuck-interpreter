@@ -20,6 +20,7 @@ import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Comparator;
 import java.util.List;
+import org.csc.java.spring2023.lint.LintProblem;
 import org.csc.java.spring2023.lint.Linter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;

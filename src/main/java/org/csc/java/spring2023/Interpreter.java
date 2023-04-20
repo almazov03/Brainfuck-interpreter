@@ -2,9 +2,12 @@ package org.csc.java.spring2023;
 
 import java.util.List;
 import org.csc.java.spring2023.lint.BrainfuckLinter;
+import org.csc.java.spring2023.lint.LintProblem;
 import org.csc.java.spring2023.lint.Linter;
 
-public class Interpreter {
+public final class Interpreter {
+
+  private static final int MEMORY_SIZE = 1024;
 
   /**
    * Исполняет программу programText, написанную на языке Brainfuck, используя ioContext в качестве
@@ -18,7 +21,7 @@ public class Interpreter {
     BrainfuckLexer lexer = new BrainfuckLexer();
     BrainfuckLinter linter = new BrainfuckLinter();
     BrainfuckParser parser = new BrainfuckParser();
-    BrainfuckMemory memory = new BrainfuckMemory(1024);
+    BrainfuckMemory memory = new BrainfuckMemory(MEMORY_SIZE);
 
     Token[] tokens = lexer.tokenize(programText);
     List<LintProblem> lintProblems = linter.lint(tokens, programText);

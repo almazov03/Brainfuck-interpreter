@@ -2,14 +2,11 @@ package org.csc.java.spring2023;
 
 public final class BrainfuckMemory implements Memory {
 
-  Byte[] memory;
-  int pointer;
+  private final byte[] memory;
+  private int pointer;
 
   public BrainfuckMemory(int memorySize) {
-    memory = new Byte[memorySize];
-    for (int i = 0; i < memorySize; ++i) {
-      memory[i] = 0;
-    }
+    memory = new byte[memorySize];
     pointer = 0;
   }
 
@@ -23,19 +20,21 @@ public final class BrainfuckMemory implements Memory {
     pointer--;
   }
 
-  @Override
-  public void setByte(byte value) throws MemoryAccessException {
+  private void checkPointer() {
     if (pointer < 0 || pointer >= memory.length) {
       throw new MemoryAccessException(pointer);
     }
+  }
+
+  @Override
+  public void setByte(byte value) throws MemoryAccessException {
+    checkPointer();
     memory[pointer] = value;
   }
 
   @Override
   public byte getByte() throws MemoryAccessException {
-    if (pointer < 0 || pointer >= memory.length) {
-      throw new MemoryAccessException(pointer);
-    }
+    checkPointer();
     return memory[pointer];
   }
 

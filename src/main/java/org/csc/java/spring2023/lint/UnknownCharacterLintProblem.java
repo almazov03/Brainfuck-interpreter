@@ -1,9 +1,9 @@
-package org.csc.java.spring2023;
+package org.csc.java.spring2023.lint;
 
 public final class UnknownCharacterLintProblem implements LintProblem {
 
-  int position;
-  String programText;
+  private final int position;
+  private final String programText;
 
   public UnknownCharacterLintProblem(int position, String programText) {
     this.position = position;

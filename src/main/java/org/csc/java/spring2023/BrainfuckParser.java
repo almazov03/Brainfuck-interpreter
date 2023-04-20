@@ -1,7 +1,8 @@
 package org.csc.java.spring2023;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Stack;
+import java.util.Deque;
 import org.csc.java.spring2023.commands.Command;
 import org.csc.java.spring2023.commands.DecreaseCommand;
 import org.csc.java.spring2023.commands.IncreaseCommand;
@@ -12,25 +13,24 @@ import org.csc.java.spring2023.commands.Program;
 import org.csc.java.spring2023.commands.ShiftLeftCommand;
 import org.csc.java.spring2023.commands.ShiftRightCommand;
 
-public class BrainfuckParser implements Parser {
+public final class BrainfuckParser implements Parser {
 
   @Override
   public Command parse(Token[] tokens) {
-    Stack<ArrayList<Command>> stackCommands = new Stack<>();
-    stackCommands.push(new ArrayList<>());
-
+    Deque<ArrayList<Command>> stackCommands = new ArrayDeque<>();
+    stackCommands.addLast(new ArrayList<>());
     for (var token : tokens) {
       switch (token) {
-        case NEXT -> stackCommands.lastElement().add(new ShiftRightCommand());
-        case PREVIOUS -> stackCommands.lastElement().add(new ShiftLeftCommand());
-        case INCREASE -> stackCommands.lastElement().add(new IncreaseCommand());
-        case DECREASE -> stackCommands.lastElement().add(new DecreaseCommand());
-        case OUTPUT -> stackCommands.lastElement().add(new OutputCommand());
-        case INPUT -> stackCommands.lastElement().add(new InputCommand());
-        case LEFT_BRACKET -> stackCommands.add(new ArrayList<>());
+        case NEXT -> stackCommands.getLast().add(new ShiftRightCommand());
+        case PREVIOUS -> stackCommands.getLast().add(new ShiftLeftCommand());
+        case INCREASE -> stackCommands.getLast().add(new IncreaseCommand());
+        case DECREASE -> stackCommands.getLast().add(new DecreaseCommand());
+        case OUTPUT -> stackCommands.getLast().add(new OutputCommand());
+        case INPUT -> stackCommands.getLast().add(new InputCommand());
+        case LEFT_BRACKET -> stackCommands.addLast(new ArrayList<>());
         case RIGHT_BRACKET -> {
-          var loop = new LoopCommand(stackCommands.pop());
-          stackCommands.lastElement().add(loop);
+          var loop = new LoopCommand(stackCommands.pollLast());
+          stackCommands.getLast().add(loop);
         }
         default -> {
           assert (false);
@@ -38,6 +38,6 @@ public class BrainfuckParser implements Parser {
       }
     }
 
-    return new Program(stackCommands.lastElement());
+    return new Program(stackCommands.getLast());
   }
 }
